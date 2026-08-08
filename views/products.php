@@ -2,6 +2,8 @@
 <head>
     <title>Products</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/products.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mozilla+Text:wght@200..700&display=swap" rel="stylesheet">
@@ -51,9 +53,9 @@
 
             <div class="footer">
                 <div class="qty">
-                    <button class="decrement">-</button>
-                    <input type="number" placeholder="0"></input>
-                    <button class="increment">+</button>
+                    <button class="decrement" onclick="decrement(this)">-</button>
+                    <input type="number" value="0" class="qty-input">
+                    <button class="increment" onclick="increment(this)">+</button>
                 </div>
                 <div class="add-to-cart"> <button>Add to Cart</button> </div>
             </div>
@@ -81,9 +83,9 @@
 
             <div class="footer">
                 <div class="qty">
-                    <button class="decrement">-</button>
-                    <input type="number" placeholder="0"></input>
-                    <button class="increment">+</button>
+                    <button class="decrement" onclick="decrement(this)">-</button>
+                    <input type="number" value="0" class="qty-input">
+                    <button class="increment" onclick="increment(this)">+</button>
                 </div>
                 <div class="add-to-cart"> <button>Add to Cart</button> </div>
             </div>
@@ -110,9 +112,9 @@
 
             <div class="footer">
                 <div class="qty">
-                    <button class="decrement">-</button>
-                    <input type="number" placeholder="0"></input>
-                    <button class="increment">+</button>
+                    <button class="decrement" onclick="decrement(this)">-</button>
+                    <input type="number" value="0" class="qty-input">
+                    <button class="increment" onclick="increment(this)">+</button>
                 </div>
                 <div class="add-to-cart"> <button>Add to Cart</button> </div>
             </div>
@@ -139,9 +141,9 @@
 
             <div class="footer">
                 <div class="qty">
-                    <button class="decrement">-</button>
-                    <input type="number" placeholder="0"></input>
-                    <button class="increment">+</button>
+                    <button class="decrement" onclick="decrement(this)">-</button>
+                    <input type="number" value="0" class="qty-input">
+                    <button class="increment" onclick="increment(this)">+</button>
                 </div>
                 <div class="add-to-cart"> <button>Add to Cart</button> </div>
             </div>
