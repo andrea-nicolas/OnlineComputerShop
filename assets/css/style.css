@@ -71,7 +71,7 @@ button, input {
 
 .hero {
     background-color: #555879;
-    height: 300px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -198,6 +198,13 @@ button, input {
     border: 1px solid #00241b;
 }
 
+.product-card form {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -210,4 +217,14 @@ button:hover {
 
 button:active {
     filter: brightness(0.92);
+}
+
+.product-details p {
+    max-height: 95px;
+    overflow: auto;
+}
+
+.qty-error {
+    color: blue;
+    font-style: italic;
 }

@@ -1,3 +1,8 @@
+<?php 
+include "../controllers/productsController.php"; 
+?>
+
+
 <!DOCTYPE html>
 <head>
     <title>Products</title>
@@ -49,16 +54,24 @@
                     RDNA 2 architecture<br>
                     Output: 2x HDMI, 2x DisplayPort<br>
                 </p>
-             </div>    
+            </div>    
 
-            <div class="footer">
-                <div class="qty">
-                    <button class="decrement" onclick="decrement(this)">-</button>
-                    <input type="number" value="0" class="qty-input">
-                    <button class="increment" onclick="increment(this)">+</button>
+            <form method="POST">
+                <?php if ($productId == 1): ?>
+                    <p class="qty-error"><?php echo $qtyErr; ?></p>
+                <?php endif; ?>
+                <div class="footer">
+                    <div class="qty">
+                        <button type="button" class="decrement" onclick="decrement(this)">-</button>
+                        <input type="number" name="quantity" value="0" class="qty-input">
+                        <button type="button" class="increment" onclick="increment(this)">+</button>
+                    </div>
+                    <div class="add-to-cart">
+                        <input type="hidden" name="product_id" value="1">
+                        <button type="submit" name="mysubmit">Add to Cart</button>
+                    </div>
                 </div>
-                <div class="add-to-cart"> <button>Add to Cart</button> </div>
-            </div>
+            </form>
         </div>
 
         <div div class="product-card">
@@ -79,19 +92,27 @@
                 AI Performance: 3352 TOPs<br>
                 Output: 2x HDMI 2.1b, 3x DisplayPort 2.1b<br>
                 </p>
-             </div>    
+            </div>    
 
-            <div class="footer">
-                <div class="qty">
-                    <button class="decrement" onclick="decrement(this)">-</button>
-                    <input type="number" value="0" class="qty-input">
-                    <button class="increment" onclick="increment(this)">+</button>
+            <form method="POST">
+                <?php if ($productId == 2): ?>
+                    <p class="qty-error"><?php echo $qtyErr; ?></p>
+                <?php endif; ?>
+                <div class="footer">
+                    <div class="qty">
+                        <button type="button" class="decrement" onclick="decrement(this)">-</button>
+                        <input type="number" name="quantity" value="0" class="qty-input">
+                        <button type="button" class="increment" onclick="increment(this)">+</button>
+                    </div>
+                    <div class="add-to-cart">
+                        <input type="hidden" name="product_id" value="2">
+                        <button type="submit" name="mysubmit">Add to Cart</button>
+                    </div>
                 </div>
-                <div class="add-to-cart"> <button>Add to Cart</button> </div>
-            </div>
+            </form>
         </div>
 
-         <div div class="product-card">
+        <div div class="product-card">
             <div class="product-image"> <img src="../assets/ryzen-9-9950x3d.jpg"> </div>
 
             <div class="product-details">
@@ -108,16 +129,24 @@
                 Cache: L1 : 1280KB; L2 : 16MB; L3 : 128MB<br>
                 CPU Socket: AM5<br>
                 </p>
-             </div>    
+            </div>    
 
-            <div class="footer">
-                <div class="qty">
-                    <button class="decrement" onclick="decrement(this)">-</button>
-                    <input type="number" value="0" class="qty-input">
-                    <button class="increment" onclick="increment(this)">+</button>
+            <form method="POST">
+                <?php if ($productId == 3): ?>
+                    <p class="qty-error"><?php echo $qtyErr; ?></p>
+                <?php endif; ?>
+                <div class="footer">
+                    <div class="qty">
+                        <button type="button" class="decrement" onclick="decrement(this)">-</button>
+                        <input type="number" name="quantity" value="0" class="qty-input">
+                        <button type="button" class="increment" onclick="increment(this)">+</button>
+                    </div>
+                    <div class="add-to-cart">
+                        <input type="hidden" name="product_id" value="3">
+                        <button type="submit" name="mysubmit">Add to Cart</button>
+                    </div>
                 </div>
-                <div class="add-to-cart"> <button>Add to Cart</button> </div>
-            </div>
+            </form>
         </div>
 
         <div div class="product-card">
@@ -137,16 +166,24 @@
                 Connectors: USB 3.0 x2, RGB LED Switch, Power Switch, Audio In & Out<br>
                 Pre-installed Fan: 3x 120mm ARGB<br>
                 </p>
-             </div>    
+            </div>    
 
-            <div class="footer">
-                <div class="qty">
-                    <button class="decrement" onclick="decrement(this)">-</button>
-                    <input type="number" value="0" class="qty-input">
-                    <button class="increment" onclick="increment(this)">+</button>
+            <form method="POST">
+                <?php if ($productId == 4): ?>
+                    <p class="qty-error"><?php echo $qtyErr; ?></p>
+                <?php endif; ?>
+                <div class="footer">
+                    <div class="qty">
+                        <button type="button" class="decrement" onclick="decrement(this)">-</button>
+                        <input type="number" name="quantity" value="0" class="qty-input">
+                        <button type="button" class="increment" onclick="increment(this)">+</button>
+                    </div>
+                    <div class="add-to-cart">
+                        <input type="hidden" name="product_id" value="4">
+                        <button type="submit" name="mysubmit">Add to Cart</button>
+                    </div>
                 </div>
-                <div class="add-to-cart"> <button>Add to Cart</button> </div>
-            </div>
+            </form>
         </div>
     </section>
 </body>
