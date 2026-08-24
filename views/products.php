@@ -37,154 +37,39 @@ include "../controllers/productsController.php";
     </section>
     
     <section class="product-container">
-        <div div class="product-card">
-            <div class="product-image"> <img src="../assets/radeon-rx-7900-xtx.jpg"> </div>
+    <?php foreach ($products as $product): ?>
+        <div class="product-card">
+            <div class="product-image">
+            <img src="<?php echo $product['image_path']; ?>">
+        </div>
 
-            <div class="product-details">
+        <div class="product-details">
+            <h3><?php echo $product['name']; ?></h3>
+
+            <div class="header">
+                <h3><?php echo number_format($product['price'], 0); ?>৳</h3>
+                <h5>(<?php echo (int)$product['stock']; ?> in stock)</h5>
+            </div>
+
+            <p><?php echo nl2br($product['description']); ?> <br> <br> 
+                <i> <?php echo nl2br($product['manufacturer_review']);?> </i> </p>
+        </div>
+
+            <form method="GET">
                 
-                <h3>[Sapphire] NITRO+ AMD Radeon RX 7900 XTX Vapor-X 24GB GDDR6</h3>
-
-                <div class = "header">
-                    <h3>152,900৳</h3>
-                    <h5>(12 in stock)</h5>
-                </div>
-                
-                <p>Boost Clock: Up to 2680 MHz, Game Clock: Up to 2510 MHz<br>
-                    Memory Clock: 20 Gbps Effective<br>
-                    RDNA 2 architecture<br>
-                    Output: 2x HDMI, 2x DisplayPort<br>
-                </p>
-            </div>    
-
-            <form method="POST">
-                <?php if ($productId == 1): ?>
-                    <p class="qty-error"><?php echo $qtyErr; ?></p>
-                <?php endif; ?>
                 <div class="footer">
+                    <p id="qtyErr-<?php echo $product['id']; ?>"> </p><br>
                     <div class="qty">
-                        <button type="button" class="decrement" onclick="decrement(this)">-</button>
-                        <input type="number" name="quantity" value="0" class="qty-input">
-                        <button type="button" class="increment" onclick="increment(this)">+</button>
+                        <input type="number" id="quantity-<?php echo $product['id']; ?>" name="quantity" value="0" class="qty-input" oninput="qtyCheck(<?php echo $product['id']; ?>)">
                     </div>
                     <div class="add-to-cart">
-                        <input type="hidden" name="product_id" value="1">
-                        <button type="submit" name="mysubmit">Add to Cart</button>
+                        <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                        <button type="button" name="addtocart" onclick="">Add to Cart</button>
                     </div>
                 </div>
             </form>
         </div>
-
-        <div div class="product-card">
-            <div class="product-image"> <img src="../assets/geforce-rtx-5090.jpg"> </div>
-
-            <div class="product-details">
-                
-                <h3>[ASUS] ROG Astral GeForce RTX 5090 32GB GDDR7</h3>
-
-                <div class = "header">
-                    <h3>730,000৳</h3>
-                    <h5>(out of stock)</h5>
-                </div>
-                
-                <p>Engine Clock: 2580 MHz (Boost Clock), 2610 MHz (OC Mode)<br>
-                Memory: 32GB GDDR7. 28 Gbps<br>
-                CUDA Core: 21760<br>
-                AI Performance: 3352 TOPs<br>
-                Output: 2x HDMI 2.1b, 3x DisplayPort 2.1b<br>
-                </p>
-            </div>    
-
-            <form method="POST">
-                <?php if ($productId == 2): ?>
-                    <p class="qty-error"><?php echo $qtyErr; ?></p>
-                <?php endif; ?>
-                <div class="footer">
-                    <div class="qty">
-                        <button type="button" class="decrement" onclick="decrement(this)">-</button>
-                        <input type="number" name="quantity" value="0" class="qty-input">
-                        <button type="button" class="increment" onclick="increment(this)">+</button>
-                    </div>
-                    <div class="add-to-cart">
-                        <input type="hidden" name="product_id" value="2">
-                        <button type="submit" name="mysubmit">Add to Cart</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div div class="product-card">
-            <div class="product-image"> <img src="../assets/ryzen-9-9950x3d.jpg"> </div>
-
-            <div class="product-details">
-                
-                <h3>[AMD] Ryzen 9 9950X3D</h3>
-
-                <div class = "header">
-                    <h3>78,600৳</h3>
-                    <h5>(1 in stock)</h5>
-                </div>
-                
-                <p>Clock Speed: 4.3GHz Up to 5.7GHz<br>
-                Cores: 16; Threads: 32<br>
-                Cache: L1 : 1280KB; L2 : 16MB; L3 : 128MB<br>
-                CPU Socket: AM5<br>
-                </p>
-            </div>    
-
-            <form method="POST">
-                <?php if ($productId == 3): ?>
-                    <p class="qty-error"><?php echo $qtyErr; ?></p>
-                <?php endif; ?>
-                <div class="footer">
-                    <div class="qty">
-                        <button type="button" class="decrement" onclick="decrement(this)">-</button>
-                        <input type="number" name="quantity" value="0" class="qty-input">
-                        <button type="button" class="increment" onclick="increment(this)">+</button>
-                    </div>
-                    <div class="add-to-cart">
-                        <input type="hidden" name="product_id" value="3">
-                        <button type="submit" name="mysubmit">Add to Cart</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div div class="product-card">
-            <div class="product-image"> <img src="../assets/c201-4-500x500.jpg"> </div>
-
-            <div class="product-details">
-                
-                <h3>[GIGABYTE] C201 Panoramic Ice Mid Tower M-ATX</h3>
-
-                <div class = "header">
-                    <h3>5,300৳</h3>
-                    <h5>(1 in stock)</h5>
-                </div>
-                
-                <p>Motherboard Support:mini-ITX/m-ATX<br>
-                Panoramic Tempered Glass Front and Side Panels<br>
-                Connectors: USB 3.0 x2, RGB LED Switch, Power Switch, Audio In & Out<br>
-                Pre-installed Fan: 3x 120mm ARGB<br>
-                </p>
-            </div>    
-
-            <form method="POST">
-                <?php if ($productId == 4): ?>
-                    <p class="qty-error"><?php echo $qtyErr; ?></p>
-                <?php endif; ?>
-                <div class="footer">
-                    <div class="qty">
-                        <button type="button" class="decrement" onclick="decrement(this)">-</button>
-                        <input type="number" name="quantity" value="0" class="qty-input">
-                        <button type="button" class="increment" onclick="increment(this)">+</button>
-                    </div>
-                    <div class="add-to-cart">
-                        <input type="hidden" name="product_id" value="4">
-                        <button type="submit" name="mysubmit">Add to Cart</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
+    <?php endforeach; ?>
+</section>
 </body>
 </html>

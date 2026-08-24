@@ -107,6 +107,7 @@ button, input {
     border: 1px solid #00241b;
 }
 
+
 .product-image {
     background-color: #FFFF;
     display: flex;
@@ -134,6 +135,11 @@ button, input {
     overflow: auto;
 }
 
+.product-details h3 {
+    max-height: 50px;
+    overflow: auto;
+}
+
 .header {
     display: flex;
     align-items: flex-end;
@@ -142,7 +148,16 @@ button, input {
 }
 
 .header h5 {
-    margin-bottom: 1px;
+    margin-bottom: 2px;
+    color:#555879;
+}
+
+[id^="qtyErr-"] {
+    font-size: small;
+    font-weight: bold;
+    color: red;
+    margin: -10px;
+    text-align: left;
 }
 
 .qty, .add-to-cart{
@@ -163,9 +178,12 @@ button, input {
 
 .qty input {
     background-color: transparent;
-    border: none;
     border-top: 1px solid #00241b;
+    border-bottom: none;
     text-align: center;
+    height: 30px;
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
 }
 
 .footer {
@@ -205,11 +223,6 @@ button, input {
     width: 100%;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
 
 button:hover {
     filter: brightness(1.05);

@@ -1,20 +1,13 @@
-
-
-function decrement(button)
-{
-    let qty = button.closest('.qty').querySelector('.qty-input');
-    if (qty.value <= 0)
-    {
-        qty.value = 0;
-    }
-    else
-    {
-        qty.value = parseInt(qty.value) - 1;
-    }
+function isValidQuantity(quantity) {
+    return /^\d+$/.test(quantity) && parseInt(quantity, 10) > 0;
 }
 
-function increment(button)
-{
-    let qty = button.closest('.qty').querySelector('.qty-input');
-    qty.value = parseInt(qty.value) + 1;
+function qtyCheck(productId) {
+    const quantity = document.getElementById('quantity-' + productId).value;
+
+    if (!isValidQuantity(quantity)) {
+        document.getElementById('qtyErr-' + productId).innerHTML = "Please enter a valid positive number.";
+    } else {
+        document.getElementById('qtyErr-' + productId).innerHTML = "";
+    }
 }
