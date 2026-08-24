@@ -1,5 +1,6 @@
 <?php 
-include "../controllers/productsController.php"; 
+require "../controllers/productsController.php"; 
+require "../controllers/cartsController.php";
 ?>
 
 
@@ -55,16 +56,16 @@ include "../controllers/productsController.php";
                 <i> <?php echo nl2br($product['manufacturer_review']);?> </i> </p>
         </div>
 
-            <form method="GET">
+            <form method="POST">
                 
                 <div class="footer">
-                    <p id="qtyErr-<?php echo $product['id']; ?>"> </p><br>
+                    <p id="qtyErr-<?php echo $product['id']; ?>"> <?php echo $qtyErr[$product['id']] ?? ""; ?> </p><br>
                     <div class="qty">
                         <input type="number" id="quantity-<?php echo $product['id']; ?>" name="quantity" value="0" class="qty-input" oninput="qtyCheck(<?php echo $product['id']; ?>)">
                     </div>
                     <div class="add-to-cart">
                         <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-                        <button type="button" name="addtocart" onclick="">Add to Cart</button>
+                        <button type="submit" name="addtocart">Add to Cart</button>
                     </div>
                 </div>
             </form>
