@@ -68,9 +68,9 @@ require "../controllers/cartsController.php";
             <div class="payment-method">
                 <h1>Payment Method</h1><hr>
                 <div class="paymentOptions">
-                    <button type="button" name="cash" id="cash"><img src="../assets/cash.png" ></button>
-                    <button type="button" name="card" id="card"><img src="../assets/card.png" ></button>
-                    <button type="button" name="bkash" id="bkash"><img src="../assets/bkash.png" ></button>
+                    <button type="radio" name="cash" id="cash" value="cash"><img src="../assets/cash.png" ></button>
+                    <button type="radio" name="card" id="card" value="card"><img src="../assets/card.png" ></button>
+                    <button type="radio" name="bkash" id="bkash" value="bkash"><img src="../assets/bkash.png" ></button>
                 </div>
             </div>
 
