@@ -26,7 +26,7 @@ require "../controllers/cartsController.php";
         </div>
 
         <div class="menu-container">  
-            <a id="shopping-cart" ><img src="../assets/shopping-cart.png"></a>
+            <a id="shopping-cart" href="cart.php"><img src="../assets/shopping-cart.png"></a>
             <a id="profile"><img src="../assets/profile.png"></a>
         </div>
 

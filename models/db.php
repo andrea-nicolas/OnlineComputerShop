@@ -23,5 +23,6 @@
             $sql = "INSERT INTO carts (user_id, product_id, quantity) VALUES ($userId, $productId, $quantity)";
             return $conn->query($sql);
         }
+
     }
 ?>
