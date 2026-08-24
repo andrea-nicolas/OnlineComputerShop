@@ -17,5 +17,11 @@
             $sql = "SELECT stock FROM products WHERE id = $productId";
             return $conn->query($sql);
         }
+
+        function insertToCarts($userId, $productId, $quantity, $conn)
+        {
+            $sql = "INSERT INTO carts (user_id, product_id, quantity) VALUES ($userId, $productId, $quantity)";
+            return $conn->query($sql);
+        }
     }
 ?>

@@ -33,6 +33,7 @@
         else
         {
             $qtyErr[$productId] = "Added to cart successfully!";
+            $db->insertToCarts(1, $productId, $quantity, $conn);
         }
     }
 ?>
