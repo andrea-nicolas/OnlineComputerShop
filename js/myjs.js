@@ -95,6 +95,31 @@ function categoryvalidation() {
 }
 
 
+// ---------------- BRAND FORM ----------------
+
+function categorypicked() {
+    var category = getValue("category_id");
+
+    if (category == "") {
+        showError("category-error", "Please choose a category");
+        return false;
+    }
+
+    clearError("category-error");
+    return true;
+}
+
+function brandvalidation() {
+    var ok1 = namevalidation("Brand");
+    var ok2 = categorypicked();
+
+    if (ok1 == false || ok2 == false) {
+        return false;
+    }
+    return true;
+}
+
+
 // ---------------- DELETE ----------------
 
 function confirmDelete(what) {

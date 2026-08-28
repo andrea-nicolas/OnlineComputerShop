@@ -161,6 +161,83 @@ class mydb
         $stmt->execute();
         return $stmt->get_result();
     }
+
+
+    // ================= BRANDS =================
+
+    function getAllBrands($conn)
+    {
+        $sql = "SELECT b.id, b.name, b.category_id, b.created_at,
+                       c.name AS category_name, p.name AS parent_name
+                FROM brands b
+                JOIN categories c ON b.category_id = c.id
+                LEFT JOIN categories p ON c.parent_id = p.id
+                ORDER BY c.name ASC, b.name ASC";
+        return $conn->query($sql);
+    }
+
+    function getBrandById($conn, $id)
+    {
+        $sql = "SELECT * FROM brands WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function countBrandByName($conn, $name, $categoryId, $excludeId)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM brands
+                WHERE name = ? AND category_id = ? AND id != ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sii", $name, $categoryId, $excludeId);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function insertBrand($conn, $name, $categoryId)
+    {
+        $sql = "INSERT INTO brands (name, category_id, created_at) VALUES (?, ?, NOW())";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $name, $categoryId);
+        return $stmt->execute();
+    }
+
+    function updateBrand($conn, $id, $name, $categoryId)
+    {
+        $sql = "UPDATE brands SET name = ?, category_id = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sii", $name, $categoryId, $id);
+        return $stmt->execute();
+    }
+
+    function deleteBrand($conn, $id)
+    {
+        $sql = "DELETE FROM brands WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
+    function countProductsInBrand($conn, $id)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM products WHERE brand_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    // Brands that belong to one category - fills the brand dropdown
+    // on the product form.
+    function getBrandsByCategory($conn, $categoryId)
+    {
+        $sql = "SELECT id, name FROM brands WHERE category_id = ? ORDER BY name ASC";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $categoryId);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
 
 ?>
