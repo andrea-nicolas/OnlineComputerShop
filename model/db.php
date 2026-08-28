@@ -61,6 +61,106 @@ class mydb
         $stmt->execute();
         return $stmt->get_result();
     }
+
+
+    // ================= CATEGORIES =================
+
+    // Every category with its parent name. A sub-category is listed
+    // directly under its parent.
+    function getAllCategories($conn)
+    {
+        $sql = "SELECT c.id, c.name, c.parent_id, c.created_at, p.name AS parent_name
+                FROM categories c
+                LEFT JOIN categories p ON c.parent_id = p.id
+                ORDER BY IFNULL(p.name, c.name) ASC, c.parent_id IS NULL DESC, c.name ASC";
+        return $conn->query($sql);
+    }
+
+    // Only main categories - used to fill the "parent category" dropdown.
+    function getParentCategories($conn)
+    {
+        $sql = "SELECT id, name FROM categories WHERE parent_id IS NULL ORDER BY name ASC";
+        return $conn->query($sql);
+    }
+
+    function getCategoryById($conn, $id)
+    {
+        $sql = "SELECT * FROM categories WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    // Stops the same name being used twice under the same parent.
+    // $excludeId is the row being edited, so a row never clashes with itself.
+    function countCategoryByName($conn, $name, $parentId, $excludeId)
+    {
+        if ($parentId == "") {
+            $sql = "SELECT COUNT(*) AS total FROM categories
+                    WHERE name = ? AND parent_id IS NULL AND id != ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("si", $name, $excludeId);
+        } else {
+            $sql = "SELECT COUNT(*) AS total FROM categories
+                    WHERE name = ? AND parent_id = ? AND id != ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sii", $name, $parentId, $excludeId);
+        }
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function insertCategory($conn, $name, $parentId)
+    {
+        $sql = "INSERT INTO categories (name, parent_id, created_at) VALUES (?, ?, NOW())";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $name, $parentId);
+        return $stmt->execute();
+    }
+
+    function updateCategory($conn, $id, $name, $parentId)
+    {
+        $sql = "UPDATE categories SET name = ?, parent_id = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sii", $name, $parentId, $id);
+        return $stmt->execute();
+    }
+
+    function deleteCategory($conn, $id)
+    {
+        $sql = "DELETE FROM categories WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
+    function countChildCategories($conn, $id)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM categories WHERE parent_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function countProductsInCategory($conn, $id)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM products WHERE category_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function countBrandsInCategory($conn, $id)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM brands WHERE category_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
 
 ?>

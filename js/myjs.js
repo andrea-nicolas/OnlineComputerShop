@@ -63,3 +63,40 @@ function loginvalidation() {
     }
     return true;
 }
+
+
+// ---------------- SHARED NAME CHECK ----------------
+
+function namevalidation(label) {
+    var name = getValue("name");
+
+    if (name == "") {
+        showError("name-error", label + " name is required");
+        return false;
+    }
+    if (name.length < 2) {
+        showError("name-error", label + " name must be at least 2 characters");
+        return false;
+    }
+    if (name.length > 100) {
+        showError("name-error", label + " name cannot be longer than 100 characters");
+        return false;
+    }
+
+    clearError("name-error");
+    return true;
+}
+
+
+// ---------------- CATEGORY FORM ----------------
+
+function categoryvalidation() {
+    return namevalidation("Category");
+}
+
+
+// ---------------- DELETE ----------------
+
+function confirmDelete(what) {
+    return confirm("Are you sure you want to delete this " + what + "?");
+}
