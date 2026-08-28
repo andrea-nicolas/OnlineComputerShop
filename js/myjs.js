@@ -243,3 +243,127 @@ function productvalidation() {
 function confirmDelete(what) {
     return confirm("Are you sure you want to delete this " + what + "?");
 }
+
+
+// =====================================================================
+// AJAX + JSON
+// ---------------------------------------------------------------------
+// When the category dropdown on the product form changes, the brands of
+// that category are fetched from ajax/get_brands.php. The server answers
+// with JSON, JavaScript reads it and rebuilds the brand dropdown, so the
+// page is never reloaded.
+//
+// The plain "Load brands of this category" submit button is still in the
+// form. It is hidden while AJAX is working and shown again if the request
+// fails, so the page still works with JavaScript switched off.
+// =====================================================================
+
+function showReloadButton() {
+    var btn = document.getElementById("reloadbtn");
+    if (btn != null) {
+        btn.style.display = "inline-block";
+    }
+}
+
+function hideReloadButton() {
+    var btn = document.getElementById("reloadbtn");
+    if (btn != null) {
+        btn.style.display = "none";
+    }
+}
+
+function setBrandStatus(message) {
+    var box = document.getElementById("brand-status");
+    if (box != null) {
+        box.innerHTML = message;
+    }
+}
+
+function loadBrands() {
+
+    var categoryId = getValue("category_id");
+    var brandBox = document.getElementById("brand_id");
+
+    if (brandBox == null) {
+        return;
+    }
+
+    clearError("brand-error");
+
+    if (categoryId == "") {
+        brandBox.innerHTML = '<option value="">-- Choose a category first --</option>';
+        setBrandStatus("");
+        return;
+    }
+
+    // remember what was selected, so an edit keeps its brand if it is
+    // still one of the brands of the newly chosen category
+    var previous = brandBox.value;
+
+    brandBox.disabled = true;
+    setBrandStatus("Loading brands...");
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            brandBox.disabled = false;
+
+            var data = JSON.parse(this.responseText);
+
+            if (data.success == false) {
+                brandBox.innerHTML = '<option value="">-- ' + data.message + ' --</option>';
+                setBrandStatus("");
+                showError("brand-error", data.message);
+                return;
+            }
+
+            if (data.brands.length == 0) {
+                brandBox.innerHTML = '<option value="">-- This category has no brand yet --</option>';
+                setBrandStatus("Add a brand for this category first.");
+                return;
+            }
+
+            var html = '<option value="">-- Choose a brand --</option>';
+
+            for (var i = 0; i < data.brands.length; i++) {
+                var brand = data.brands[i];
+                html = html + '<option value="' + brand.id + '"';
+                if (brand.id == previous) {
+                    html = html + ' selected';
+                }
+                html = html + '>' + brand.name + '</option>';
+            }
+
+            brandBox.innerHTML = html;
+            setBrandStatus(data.brands.length + " brand(s) loaded for this category.");
+
+        } else if (this.readyState == 4) {
+
+            // the request finished but not with 200 OK
+            brandBox.disabled = false;
+            setBrandStatus("");
+            showError("brand-error", "Could not load the brands. Use the button below instead.");
+            showReloadButton();
+        }
+    };
+
+    xhttp.onerror = function () {
+        brandBox.disabled = false;
+        setBrandStatus("");
+        showError("brand-error", "Could not reach the server. Use the button below instead.");
+        showReloadButton();
+    };
+
+    xhttp.open("GET", "../ajax/get_brands.php?category_id=" + categoryId, true);
+    xhttp.send();
+}
+
+
+// JavaScript is clearly working if this line runs, so the plain submit
+// button that does the same job is not needed.
+document.addEventListener("DOMContentLoaded", function () {
+    hideReloadButton();
+});
