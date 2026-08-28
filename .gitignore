@@ -1,0 +1,4 @@
+# Uploaded product images belong to whoever is running the panel,
+# not to the repository. The folder itself is kept by .gitkeep.
+uploads/products/*
+!uploads/products/.gitkeep
