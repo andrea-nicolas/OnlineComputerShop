@@ -120,6 +120,124 @@ function brandvalidation() {
 }
 
 
+// ---------------- PRODUCT FORM ----------------
+
+function pricevalidation() {
+    var price = getValue("price");
+
+    if (price == "") {
+        showError("price-error", "Price is required");
+        return false;
+    }
+    if (isNaN(price)) {
+        showError("price-error", "Price must be a number");
+        return false;
+    }
+    if (Number(price) <= 0) {
+        showError("price-error", "Price must be greater than 0");
+        return false;
+    }
+
+    clearError("price-error");
+    return true;
+}
+
+function stockvalidation() {
+    var stock = getValue("stock");
+
+    if (stock == "") {
+        showError("stock-error", "Stock quantity is required");
+        return false;
+    }
+    if (isNaN(stock)) {
+        showError("stock-error", "Stock must be a number");
+        return false;
+    }
+    if (Number(stock) < 0) {
+        showError("stock-error", "Stock cannot be negative");
+        return false;
+    }
+    if (Number(stock) != parseInt(stock)) {
+        showError("stock-error", "Stock must be a whole number");
+        return false;
+    }
+
+    clearError("stock-error");
+    return true;
+}
+
+function brandpicked() {
+    var brand = getValue("brand_id");
+
+    if (brand == "") {
+        showError("brand-error", "Please choose a brand");
+        return false;
+    }
+
+    clearError("brand-error");
+    return true;
+}
+
+function imagevalidation() {
+    var field = document.getElementById("image");
+
+    if (field == null || field.files.length == 0) {
+        // no new file chosen - PHP decides if that is allowed
+        clearError("image-error");
+        return true;
+    }
+
+    var file = field.files[0];
+    var fileName = file.name.toLowerCase();
+
+    var isJpg = fileName.indexOf(".jpg") == fileName.length - 4;
+    var isJpeg = fileName.indexOf(".jpeg") == fileName.length - 5;
+    var isPng = fileName.indexOf(".png") == fileName.length - 4;
+
+    if (isJpg == false && isJpeg == false && isPng == false) {
+        showError("image-error", "Only JPEG and PNG images are allowed");
+        return false;
+    }
+
+    if (file.size > 2097152) {
+        showError("image-error", "The image must be 2MB or smaller");
+        return false;
+    }
+
+    clearError("image-error");
+    return true;
+}
+
+// The "Load brands of this category" button submits the form on purpose
+// without saving, so the form checks below must not block it.
+var skipValidation = false;
+
+function markReload() {
+    skipValidation = true;
+}
+
+function productvalidation() {
+
+    if (skipValidation == true) {
+        skipValidation = false;
+        return true;
+    }
+
+    var ok1 = namevalidation("Product");
+    var ok2 = categorypicked();
+    var ok3 = brandpicked();
+    var ok4 = pricevalidation();
+    var ok5 = stockvalidation();
+    var ok6 = imagevalidation();
+
+    if (ok1 == false || ok2 == false || ok3 == false || ok4 == false
+        || ok5 == false || ok6 == false) {
+        return false;
+    }
+    return true;
+}
+
+
 // ---------------- DELETE ----------------
 
 function confirmDelete(what) {

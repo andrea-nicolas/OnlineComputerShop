@@ -238,6 +238,72 @@ class mydb
         $stmt->execute();
         return $stmt->get_result();
     }
+
+
+    // ================= PRODUCTS =================
+
+    function getAllProducts($conn)
+    {
+        $sql = "SELECT pr.id, pr.name, pr.price, pr.stock, pr.image_path, pr.created_at,
+                       c.name AS category_name, b.name AS brand_name
+                FROM products pr
+                JOIN categories c ON pr.category_id = c.id
+                JOIN brands b ON pr.brand_id = b.id
+                ORDER BY pr.name ASC";
+        return $conn->query($sql);
+    }
+
+    function getProductById($conn, $id)
+    {
+        $sql = "SELECT * FROM products WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function countProductByName($conn, $name, $excludeId)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM products WHERE name = ? AND id != ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $name, $excludeId);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function insertProduct($conn, $name, $description, $review, $price,
+                           $categoryId, $brandId, $imagePath, $stock)
+    {
+        $sql = "INSERT INTO products
+                (name, description, manufacturer_review, price, category_id,
+                 brand_id, image_path, stock, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssdiisi", $name, $description, $review, $price,
+                          $categoryId, $brandId, $imagePath, $stock);
+        return $stmt->execute();
+    }
+
+    function updateProduct($conn, $id, $name, $description, $review, $price,
+                           $categoryId, $brandId, $imagePath, $stock)
+    {
+        $sql = "UPDATE products SET name = ?, description = ?, manufacturer_review = ?,
+                price = ?, category_id = ?, brand_id = ?, image_path = ?, stock = ?
+                WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssdiisii", $name, $description, $review, $price,
+                          $categoryId, $brandId, $imagePath, $stock, $id);
+        return $stmt->execute();
+    }
+
+    function deleteProduct($conn, $id)
+    {
+        $sql = "DELETE FROM products WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
 }
 
 ?>
