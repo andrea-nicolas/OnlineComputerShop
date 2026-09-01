@@ -18,9 +18,9 @@ Two user roles:
 
 | Task | Student ID | Main Features |
 |------|-----------|----------------|
-| Task 1 | 23-50573-1 | User Authentication, Registration, Profile, Home Page, Category Bar, Featured Components |
+| Task 1 | 23-54430-3 | User Authentication, Registration, Profile, Home Page, Category Bar, Featured Components |
 | Task 2 | 23-53850-3 | Admin – Category & Sub-category Management, Brand Management, Product Management (full CRUD) |
-| Task 3 | 23-50975-1 | Customer – Browse by Category/Sub-category/Brand, Search & Filtering (AJAX), Product Details, Cart (add/view/update/remove) |
+| Task 3 | 24-56465-1 | Customer – Browse by Category/Sub-category/Brand, Search & Filtering (AJAX), Product Details, Cart (add/view/update/remove) |
 | Task 4 | 23-51842-2 | Customer Reviews (post/delete own), Order Placement with Payment Method Selection, Admin Removal of Customers & Reviews |
 
 ## Shared Database Schema
@@ -76,7 +76,7 @@ Each student must satisfy all 10 within their task:
 
 ### Task 1 – User Authentication, Registration, Profile, Home Page, Category Bar & Featured Components
 
-**Student:** 23-50573-1
+**Student:** 23-54430-3
 **CRUD included:** Create (registration), Read/Update (profile)
 
 **Requirements:**
@@ -94,7 +94,7 @@ Each student must satisfy all 10 within their task:
 
 ### Task 2 – Admin: Category & Sub-category Management, Brand Management, Product Management (full CRUD)
 
-**Student:** 23-50934-1
+**Student:** 23-53850-3
 **CRUD included:** Full CRUD on categories (including sub-categories), brands, and products.
 
 **Requirements:**
@@ -111,7 +111,7 @@ Each student must satisfy all 10 within their task:
 
 ### Task 3 – Customer: Browse by Category/Sub-category/Brand, Search & Filtering (AJAX), Product Details, Cart
 
-**Student:** 23-50975-1
+**Student:** 24-56465-1
 **CRUD included:** Create, Update, Delete on cart (session or DB based cart). Read for product browsing.
 
 **Requirements:**
@@ -133,7 +133,7 @@ Each student must satisfy all 10 within their task:
 
 ### Task 4 – Customer Reviews, Order Placement with Payment Method, Admin Removal of Customers & Reviews
 
-**Student:** 23-51148-1
+**Student:** 23-51842-2
 **CRUD included:** Create/Delete (reviews by customer), Create (order), Delete (users and reviews by admin).
 
 **Requirements:**
