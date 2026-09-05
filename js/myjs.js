@@ -362,6 +362,94 @@ function loadBrands() {
 }
 
 
+// ---------------------------------------------------------------------
+// AJAX: switch a product between active and inactive from the product list
+//
+// This one uses POST, because it changes data in the database. The button
+// sits inside a normal form, and returning false stops that form from
+// submitting so the page never reloads. With JavaScript switched off this
+// function never runs, the form submits as usual, and product_control.php
+// saves the status instead.
+// ---------------------------------------------------------------------
+
+function showAjaxMessage(cssClass, text) {
+    var box = document.getElementById("ajax-message");
+    if (box != null) {
+        box.innerHTML = '<div class="' + cssClass + '">' + text + "</div>";
+    }
+}
+
+function toggleStatus(productId) {
+
+    var hidden = document.getElementById("statusval-" + productId);
+    var badge = document.getElementById("statusbadge-" + productId);
+    var button = document.getElementById("statusbtn-" + productId);
+
+    if (hidden == null || badge == null || button == null) {
+        // something is missing, let the plain form post handle it
+        return true;
+    }
+
+    var wanted = hidden.value;
+
+    button.disabled = true;
+    button.value = "Saving...";
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            button.disabled = false;
+            var data = JSON.parse(this.responseText);
+
+            if (data.success == false) {
+                button.value = wanted == "active" ? "Set active" : "Set inactive";
+                showAjaxMessage("alert-error", data.message);
+                return;
+            }
+
+            // redraw the row from what the server actually saved
+            if (data.status == "inactive") {
+                badge.className = "badge badge-off";
+                badge.innerHTML = "Inactive";
+                hidden.value = "active";
+                button.value = "Set active";
+            } else {
+                badge.className = "badge badge-ok";
+                badge.innerHTML = "Active";
+                hidden.value = "inactive";
+                button.value = "Set inactive";
+            }
+
+            showAjaxMessage("alert-success", data.message);
+
+        } else if (this.readyState == 4) {
+
+            button.disabled = false;
+            button.value = wanted == "active" ? "Set active" : "Set inactive";
+            showAjaxMessage("alert-error",
+                "Could not save the status. Please reload the page and try again.");
+        }
+    };
+
+    xhttp.onerror = function () {
+        button.disabled = false;
+        button.value = wanted == "active" ? "Set active" : "Set inactive";
+        showAjaxMessage("alert-error",
+            "Could not reach the server. Please reload the page and try again.");
+    };
+
+    xhttp.open("POST", "../ajax/toggle_status.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("product_id=" + productId + "&status=" + wanted);
+
+    // stop the form around the button from submitting
+    return false;
+}
+
+
 // JavaScript is clearly working if this line runs, so the plain submit
 // button that does the same job is not needed.
 document.addEventListener("DOMContentLoaded", function () {

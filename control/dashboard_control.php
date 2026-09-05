@@ -9,6 +9,7 @@ $conn = $db->openConn();
 $totalProducts = 0;
 $totalCategories = 0;
 $totalBrands = 0;
+$inactiveProducts = 0;
 $lowStockRows = array();
 
 // ---- total products ----
@@ -16,6 +17,13 @@ $result = $db->countProducts($conn);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $totalProducts = $row["total"];
+}
+
+// ---- how many of them are switched off ----
+$result = $db->countInactiveProducts($conn);
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $inactiveProducts = $row["total"];
 }
 
 // ---- total categories ----

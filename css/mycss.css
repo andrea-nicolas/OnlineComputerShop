@@ -256,6 +256,21 @@ a:hover {
     color: #24467e;
 }
 
+.badge-off {
+    background-color: #e6e8ec;
+    color: #5b6472;
+}
+
+/* the active / inactive toggle sits under its badge in the table cell */
+.btn-status {
+    margin-top: 6px;
+}
+
+.btn-status:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
 
 /* ---------------- FORMS ---------------- */
 

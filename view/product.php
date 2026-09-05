@@ -21,6 +21,9 @@ if (!empty($_SESSION["err"])) {
     <a class="btn btn-primary" href="product_form.php">+ Add Product</a>
 </div>
 
+<!-- messages written by the AJAX status toggle go here -->
+<div id="ajax-message"></div>
+
 <?php if (count($productRows) == 0) { ?>
 
     <p class="empty-note">No product has been added yet. A category and a brand
@@ -37,10 +40,26 @@ if (!empty($_SESSION["err"])) {
             <th>Brand</th>
             <th>Price</th>
             <th>Stock</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
 
-        <?php foreach ($productRows as $row) { ?>
+        <?php foreach ($productRows as $row) {
+
+            // work out how this row's status should be shown, and what
+            // clicking the button would change it to
+            if ($row["status"] == "inactive") {
+                $statusClass = "badge-off";
+                $statusLabel = "Inactive";
+                $nextStatus = "active";
+                $buttonLabel = "Set active";
+            } else {
+                $statusClass = "badge-ok";
+                $statusLabel = "Active";
+                $nextStatus = "inactive";
+                $buttonLabel = "Set inactive";
+            }
+        ?>
         <tr>
             <td>
                 <?php if ($row["image_path"] != "" && file_exists($row["image_path"])) { ?>
@@ -60,6 +79,26 @@ if (!empty($_SESSION["err"])) {
                 <?php } else { ?>
                     <span class="badge badge-ok"><?php echo $row["stock"]; ?></span>
                 <?php } ?>
+            </td>
+            <td>
+                <span class="badge <?php echo $statusClass; ?>"
+                      id="statusbadge-<?php echo $row["id"]; ?>"><?php echo $statusLabel; ?></span>
+
+                <!-- With JavaScript on, onclick returns false so this form never
+                     submits and ajax/toggle_status.php does the work instead.
+                     With JavaScript off, it is a normal form post. -->
+                <form class="inline-form" method="post"
+                      action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <input type="hidden" name="toggle_id" value="<?php echo $row["id"]; ?>">
+                    <input type="hidden" name="new_status"
+                           id="statusval-<?php echo $row["id"]; ?>"
+                           value="<?php echo $nextStatus; ?>">
+                    <input type="submit" name="toggle"
+                           id="statusbtn-<?php echo $row["id"]; ?>"
+                           value="<?php echo $buttonLabel; ?>"
+                           class="btn btn-small btn-status"
+                           onclick="return toggleStatus(<?php echo $row["id"]; ?>);">
+                </form>
             </td>
             <td>
                 <a class="btn btn-small" href="product_form.php?id=<?php echo $row["id"]; ?>">Edit</a>

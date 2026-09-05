@@ -242,13 +242,17 @@ class mydb
 
     // ================= PRODUCTS =================
 
+    // A product with no row in product_status counts as active, so
+    // IFNULL() supplies that default straight from the query.
     function getAllProducts($conn)
     {
         $sql = "SELECT pr.id, pr.name, pr.price, pr.stock, pr.image_path, pr.created_at,
-                       c.name AS category_name, b.name AS brand_name
+                       c.name AS category_name, b.name AS brand_name,
+                       IFNULL(ps.status, 'active') AS status
                 FROM products pr
                 JOIN categories c ON pr.category_id = c.id
                 JOIN brands b ON pr.brand_id = b.id
+                LEFT JOIN product_status ps ON pr.id = ps.product_id
                 ORDER BY pr.name ASC";
         return $conn->query($sql);
     }
@@ -302,6 +306,41 @@ class mydb
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
         return $stmt->execute();
+    }
+
+
+    // ================= PRODUCT STATUS =================
+    // Kept in its own table because the shared schema must not be altered.
+
+    function countProductStatusRow($conn, $productId)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM product_status WHERE product_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $productId);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    function insertProductStatus($conn, $productId, $status)
+    {
+        $sql = "INSERT INTO product_status (product_id, status, updated_at) VALUES (?, ?, NOW())";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("is", $productId, $status);
+        return $stmt->execute();
+    }
+
+    function updateProductStatus($conn, $productId, $status)
+    {
+        $sql = "UPDATE product_status SET status = ?, updated_at = NOW() WHERE product_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $status, $productId);
+        return $stmt->execute();
+    }
+
+    function countInactiveProducts($conn)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM product_status WHERE status = 'inactive'";
+        return $conn->query($sql);
     }
 
 }

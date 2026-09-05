@@ -11,6 +11,9 @@ include "layout/header.php";
     <div class="card">
         <div class="card-label">Total Products</div>
         <div class="card-number"><?php echo $totalProducts; ?></div>
+        <?php if ($inactiveProducts > 0) { ?>
+            <span class="card-note"><?php echo $inactiveProducts; ?> switched off</span><br>
+        <?php } ?>
         <a class="card-link" href="product.php">Manage products</a>
     </div>
 
