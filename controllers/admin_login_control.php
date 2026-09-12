@@ -1,7 +1,7 @@
 <?php
 
-include_once "../model/db.php";
-include_once "../control/validation.php";
+include_once "../../models/admin_db.php";
+include_once "../../controllers/admin_validation.php";
 
 session_start();
 

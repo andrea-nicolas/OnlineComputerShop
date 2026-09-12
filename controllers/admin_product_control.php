@@ -3,16 +3,16 @@
 // Product list page + delete handling.
 // Deleting a product also deletes its uploaded image file.
 
-include_once "../control/authcheck.php";
-include_once "../model/db.php";
-include_once "../control/status_helper.php";
+include_once "../../controllers/admin_authcheck.php";
+include_once "../../models/admin_db.php";
+include_once "../../controllers/admin_status_helper.php";
 
 $db = new mydb();
 $conn = $db->openConn();
 
 // ---------------- ACTIVE / INACTIVE TOGGLE ----------------
 // This is the fallback used when JavaScript is switched off. With JavaScript
-// working, toggleStatus() in js/myjs.js calls ajax/toggle_status.php instead
+// working, toggleStatus() in assets/js/admin.js calls ajax/admin_toggle_status.php instead
 // and the row updates without the page reloading. Both paths end up in
 // save_product_status(), so they behave identically.
 
@@ -82,8 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete"])) {
             if ($db->deleteProduct($conn, $deleteId)) {
 
                 // remove the image file from the uploads folder
-                if ($oldImage != "" && file_exists($oldImage)) {
-                    unlink($oldImage);
+                if ($oldImage != "" && file_exists("../../" . $oldImage)) {
+                    unlink("../../" . $oldImage);
                 }
 
                 $_SESSION["msg"] = "Product \"" . $product["name"] . "\" was deleted.";

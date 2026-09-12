@@ -249,7 +249,7 @@ function confirmDelete(what) {
 // AJAX + JSON
 // ---------------------------------------------------------------------
 // When the category dropdown on the product form changes, the brands of
-// that category are fetched from ajax/get_brands.php. The server answers
+// that category are fetched from ajax/admin_get_brands.php. The server answers
 // with JSON, JavaScript reads it and rebuilds the brand dropdown, so the
 // page is never reloaded.
 //
@@ -357,7 +357,7 @@ function loadBrands() {
         showReloadButton();
     };
 
-    xhttp.open("GET", "../ajax/get_brands.php?category_id=" + categoryId, true);
+    xhttp.open("GET", "../../ajax/admin_get_brands.php?category_id=" + categoryId, true);
     xhttp.send();
 }
 
@@ -441,7 +441,7 @@ function toggleStatus(productId) {
             "Could not reach the server. Please reload the page and try again.");
     };
 
-    xhttp.open("POST", "../ajax/toggle_status.php", true);
+    xhttp.open("POST", "../../ajax/admin_toggle_status.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("product_id=" + productId + "&status=" + wanted);
 

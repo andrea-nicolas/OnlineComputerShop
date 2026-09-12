@@ -2,14 +2,14 @@
 
 // AJAX ENDPOINT - returns the brands of one category as JSON.
 //
-// Called by loadBrands() in js/myjs.js when the category dropdown on the
+// Called by loadBrands() in assets/js/admin.js when the category dropdown on the
 // product form changes, so the brand list updates without reloading the page.
 //
-// Request : GET ../ajax/get_brands.php?category_id=2
+// Request : GET ../../ajax/admin_get_brands.php?category_id=2
 // Response: {"success":true,"message":"","brands":[{"id":1,"name":"SanDisk"}]}
 
-include_once "../control/authcheck_json.php";
-include_once "../model/db.php";
+include_once "../controllers/admin_authcheck_json.php";
+include_once "../models/admin_db.php";
 
 header("Content-Type: application/json");
 

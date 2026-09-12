@@ -1,7 +1,7 @@
 <?php
 
-include_once "../control/authcheck.php";
-include_once "../model/db.php";
+include_once "../../controllers/admin_authcheck.php";
+include_once "../../models/admin_db.php";
 
 $db = new mydb();
 $conn = $db->openConn();

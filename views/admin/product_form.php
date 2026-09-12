@@ -1,6 +1,6 @@
 <?php
-include "../control/product_form_control.php";
-include "layout/header.php";
+include "../../controllers/admin_product_form_control.php";
+include "layouts/header.php";
 ?>
 
 <h1 class="page-title"><?php echo $formTitle; ?></h1>
@@ -98,9 +98,9 @@ brands of that category.</p>
 
         <label for="image">Product Image</label>
 
-        <?php if ($currentImage != "" && file_exists($currentImage)) { ?>
+        <?php if ($currentImage != "" && file_exists("../../" . $currentImage)) { ?>
             <div class="current-image">
-                <img class="table-img" src="<?php echo $currentImage; ?>" alt="Current image">
+                <img class="table-img" src="../../<?php echo $currentImage; ?>" alt="Current image">
                 <span class="hint">Current image. Choosing a new file replaces it.</span>
             </div>
         <?php } ?>
@@ -121,4 +121,4 @@ brands of that category.</p>
 
 <?php } ?>
 
-<?php include "layout/footer.php"; ?>
+<?php include "layouts/footer.php"; ?>

@@ -1,6 +1,6 @@
 <?php
-include "../control/category_control.php";
-include "layout/header.php";
+include "../../controllers/admin_category_control.php";
+include "layouts/header.php";
 ?>
 
 <h1 class="page-title">Categories</h1>
@@ -80,4 +80,4 @@ if (!empty($_SESSION["err"])) {
 
 <?php } ?>
 
-<?php include "layout/footer.php"; ?>
+<?php include "layouts/footer.php"; ?>

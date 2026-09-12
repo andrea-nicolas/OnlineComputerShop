@@ -7,7 +7,7 @@ $currentPage = basename($_SERVER["PHP_SELF"]);
 <head>
     <title>Admin Panel - Online Computer Shop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../css/mycss.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/admin.css">
 </head>
 <body>
 
@@ -15,7 +15,7 @@ $currentPage = basename($_SERVER["PHP_SELF"]);
     <div class="topbar-title">Online Computer Shop <span>Admin</span></div>
     <div class="topbar-user">
         <?php echo $_SESSION["name"]; ?>
-        <a class="logout-link" href="../control/logout.php">Logout</a>
+        <a class="logout-link" href="../../controllers/admin_logout.php">Logout</a>
     </div>
 </div>
 

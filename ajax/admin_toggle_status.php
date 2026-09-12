@@ -2,17 +2,17 @@
 
 // AJAX ENDPOINT - switches one product between active and inactive.
 //
-// Called by toggleStatus() in js/myjs.js from the product list, so the row
+// Called by toggleStatus() in assets/js/admin.js from the product list, so the row
 // updates in place without the page reloading.
 //
-// Request : POST ../ajax/toggle_status.php   body: product_id=5&status=inactive
+// Request : POST ../../ajax/admin_toggle_status.php   body: product_id=5&status=inactive
 // Response: {"success":true,"message":"...","product_id":5,"status":"inactive"}
 //
 // POST is used, not GET, because this changes data in the database.
 
-include_once "../control/authcheck_json.php";
-include_once "../model/db.php";
-include_once "../control/status_helper.php";
+include_once "../controllers/admin_authcheck_json.php";
+include_once "../models/admin_db.php";
+include_once "../controllers/admin_status_helper.php";
 
 header("Content-Type: application/json");
 

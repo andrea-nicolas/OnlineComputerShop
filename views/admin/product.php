@@ -1,6 +1,6 @@
 <?php
-include "../control/product_control.php";
-include "layout/header.php";
+include "../../controllers/admin_product_control.php";
+include "layouts/header.php";
 ?>
 
 <h1 class="page-title">Products</h1>
@@ -62,8 +62,8 @@ if (!empty($_SESSION["err"])) {
         ?>
         <tr>
             <td>
-                <?php if ($row["image_path"] != "" && file_exists($row["image_path"])) { ?>
-                    <img class="table-img" src="<?php echo $row["image_path"]; ?>"
+                <?php if ($row["image_path"] != "" && file_exists("../../" . $row["image_path"])) { ?>
+                    <img class="table-img" src="../../<?php echo $row["image_path"]; ?>"
                          alt="<?php echo $row["name"]; ?>">
                 <?php } else { ?>
                     <span class="no-img">No image</span>
@@ -85,7 +85,7 @@ if (!empty($_SESSION["err"])) {
                       id="statusbadge-<?php echo $row["id"]; ?>"><?php echo $statusLabel; ?></span>
 
                 <!-- With JavaScript on, onclick returns false so this form never
-                     submits and ajax/toggle_status.php does the work instead.
+                     submits and ajax/admin_toggle_status.php does the work instead.
                      With JavaScript off, it is a normal form post. -->
                 <form class="inline-form" method="post"
                       action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
@@ -118,4 +118,4 @@ if (!empty($_SESSION["err"])) {
 
 <?php } ?>
 
-<?php include "layout/footer.php"; ?>
+<?php include "layouts/footer.php"; ?>

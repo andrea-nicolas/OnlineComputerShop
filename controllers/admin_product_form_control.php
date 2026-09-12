@@ -7,9 +7,9 @@
 // the "reload" button, the brand list is rebuilt from the database, and every
 // value the user already typed is kept.
 
-include_once "../control/authcheck.php";
-include_once "../model/db.php";
-include_once "../control/validation.php";
+include_once "../../controllers/admin_authcheck.php";
+include_once "../../models/admin_db.php";
+include_once "../../controllers/admin_validation.php";
 
 $db = new mydb();
 $conn = $db->openConn();
@@ -239,7 +239,7 @@ if ($isSave == true) {
                     // a unique name so two uploads never overwrite each other
                     $uploadedNewName = "p" . time() . rand(100, 999) . "." . $ext;
                     $uploadedTempFile = $_FILES["image"]["tmp_name"];
-                    $newImagePath = "../uploads/products/" . $uploadedNewName;
+                    $newImagePath = "uploads/products/" . $uploadedNewName;
                 }
             }
         }
@@ -253,7 +253,7 @@ if ($isSave == true) {
 
         // move the uploaded file into the uploads folder first
         if ($uploadedTempFile != "") {
-            $moveOk = move_uploaded_file($uploadedTempFile, "../uploads/products/" . $uploadedNewName);
+            $moveOk = move_uploaded_file($uploadedTempFile, "../../uploads/products/" . $uploadedNewName);
             if ($moveOk == false) {
                 $imageErr = "The image could not be saved to the uploads folder";
             }
@@ -278,8 +278,8 @@ if ($isSave == true) {
 
                 // the new image replaced an old one, so remove the old file
                 if ($uploadedNewName != "" && $currentImage != ""
-                    && $currentImage != $newImagePath && file_exists($currentImage)) {
-                    unlink($currentImage);
+                    && $currentImage != $newImagePath && file_exists("../../" . $currentImage)) {
+                    unlink("../../" . $currentImage);
                 }
 
                 $conn->close();

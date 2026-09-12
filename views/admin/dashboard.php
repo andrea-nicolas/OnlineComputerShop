@@ -1,6 +1,6 @@
 <?php
-include "../control/dashboard_control.php";
-include "layout/header.php";
+include "../../controllers/admin_inventory_control.php";
+include "layouts/header.php";
 ?>
 
 <h1 class="page-title">Dashboard</h1>
@@ -62,4 +62,4 @@ include "layout/header.php";
 
 <?php } ?>
 
-<?php include "layout/footer.php"; ?>
+<?php include "layouts/footer.php"; ?>

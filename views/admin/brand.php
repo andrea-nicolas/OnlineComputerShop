@@ -1,6 +1,6 @@
 <?php
-include "../control/brand_control.php";
-include "layout/header.php";
+include "../../controllers/admin_brand_control.php";
+include "layouts/header.php";
 ?>
 
 <h1 class="page-title">Brands</h1>
@@ -67,4 +67,4 @@ if (!empty($_SESSION["err"])) {
 
 <?php } ?>
 
-<?php include "layout/footer.php"; ?>
+<?php include "layouts/footer.php"; ?>

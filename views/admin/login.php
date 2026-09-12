@@ -1,12 +1,12 @@
 <?php
-include "../control/login_control.php";
+include "../../controllers/admin_login_control.php";
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Admin Login - Online Computer Shop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../css/mycss.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/admin.css">
 </head>
 <body class="login-body">
 
@@ -38,6 +38,6 @@ include "../control/login_control.php";
 
 </div>
 
-<script src="../js/myjs.js"></script>
+<script src="../../assets/js/admin.js"></script>
 </body>
 </html>

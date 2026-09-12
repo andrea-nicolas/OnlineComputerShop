@@ -4,9 +4,9 @@
 // The same file handles both: if an id is in the URL it is an edit,
 // otherwise it is a new category.
 
-include_once "../control/authcheck.php";
-include_once "../model/db.php";
-include_once "../control/validation.php";
+include_once "../../controllers/admin_authcheck.php";
+include_once "../../models/admin_db.php";
+include_once "../../controllers/admin_validation.php";
 
 $db = new mydb();
 $conn = $db->openConn();
