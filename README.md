@@ -1,258 +1,158 @@
-<<<<<<< HEAD
-# OnlineComputerShop
-=======
-# LabTask02 — Online Computer Shop (Task 4)
+# Project 02 — Online Computer Shop
 
-Project 02, Group 02 — Web Technologies (CSC 3215)
+**Course:** Web Technologies
+**Format:** Project
+**Duration:** 1 week
 
-**Task 4:** Customer Reviews · Order Placement with Payment Method · Admin Removal of Customers & Reviews
+## Application Overview
 
----
+An "Online Computer Shop" where different PC peripherals and components are shown with detailed manufacturing information and price. Users can browse, view components, add products to cart, and select payment methods.
 
-## Setup
+Two user roles:
 
-1. Start **Apache** and **MySQL** from the XAMPP control panel.
-2. Open <http://localhost/phpmyadmin> and create a database named `onlinecomputershop`.
-3. Import `sql/onlinecomputershop.sql` (the shared group schema).
-4. Import `sql/seed_data.sql` (demo categories, brands, products, users, reviews, cart rows).
-   Later on, `sql/reset_demo.sql` puts this starting state back at any time.
-5. Open <http://localhost/LabTask02/>.
+- **ADMIN** — main controlling point; removes customers and their reviews.
+- **CUSTOMER** — browses products, searches with filters, posts reviews, adds to cart, selects payment method, and places orders.
+- **Unregistered visitors** can browse but cannot post reviews or order.
 
-### Test accounts
+## Team Structure & Student IDs
 
-| Role | Name | Email | Password |
-|------|------|-------|----------|
-| Admin | Mahmud Hasan | admin@shop.com | admin123 |
-| Customer | Rafid Islam | rafid@example.com | password123 |
-| Customer | Nusrat Jahan | nusrat@example.com | password123 |
-| Customer | Tanvir Ahmed | tanvir@example.com | password123 |
+| Task | Student ID | Main Features |
+|------|-----------|----------------|
+| Task 1 | 23-54430-3 | User Authentication, Registration, Profile, Home Page, Category Bar, Featured Components |
+| Task 2 | 23-53850-3 | Admin – Category & Sub-category Management, Brand Management, Product Management (full CRUD) |
+| Task 3 | 24-56465-1 | Customer – Browse by Category/Sub-category/Brand, Search & Filtering (AJAX), Product Details, Cart (add/view/update/remove) |
+| Task 4 | 23-51842-2 | Customer Reviews (post/delete own), Order Placement with Payment Method Selection, Admin Removal of Customers & Reviews |
 
-Opening the site signs you in through **`view/login.php`**. Registration and the
-password form are Task 1, so until those are merged the page lets you pick one of
-the seeded customer accounts. Everything after that point is a real PHP session:
+## Shared Database Schema
 
-- `session_start()` runs at the top of `control/bootstrap.php`, before any output
-- the session keys are the ones the project brief names &mdash; `$_SESSION["user_id"]`,
-  `$_SESSION["name"]`, `$_SESSION["role"]` &mdash; so Task 1's login can set exactly
-  these and every page here keeps working unchanged
-- **Remember me** writes a cookie with `setcookie(..., time() + (86400 * 30), "/")`,
-  and `control/bootstrap.php` uses it to rebuild the session after the browser is
-  closed
-- **Sign out** calls `session_unset()` and `session_destroy()`, then deletes the
-  cookie by giving it `time() - 3600`, as the Session/Cookie lecture does
+*(same for all — no code sharing except the schema)*
 
-The cookie carries the user id plus a signature of that id, so editing it by hand
-does not let anyone become another user. The brief asks for a hashed token in
-`users.remember_token`, but the shared schema has no such column and we must not
-alter it &mdash; adding that column is Task 1's to do.
+| Table | Key Columns |
+|-------|-------------|
+| `users` | id, name, email, password_hash, role (admin/customer), profile_picture, created_at |
+| `categories` | id, name, parent_id (for sub-categories), created_at |
+| `brands` | id, name, category_id, created_at |
+| `products` | id, name, description, manufacturer_review, price, category_id, brand_id, image_path, stock, created_at |
+| `cart` | id, user_id, product_id, quantity, added_at |
+| `orders` | id, user_id, total_amount, payment_method (cash_on_delivery/online_wallet), status, order_date |
+| `order_items` | id, order_id, product_id, quantity, unit_price |
+| `reviews` | id, product_id, user_id, reviewer_name, comment, created_at |
 
-Cart, checkout and My Orders redirect a signed-out visitor to the sign in page.
-Browsing products and reading reviews stays public.
+## Global Technical Requirements
 
-### Putting the demo back to its starting state
+- PHP MVC (`controllers/`, `models/`, `views/`, `config/`)
+- Passwords hashed with `password_hash()` / verified with `password_verify()`
+- PDO/mysqli + prepared statements for every query — no string-concatenated SQL
+- Server-side validation on every form before any DB write; show inline error messages
+- `session_start()` on every page that requires auth; redirect unauthenticated users
+- AJAX endpoints return `Content-Type: application/json`; handle errors client-side
+- File uploads go to `public/uploads/` (profile pictures, product images) — validate MIME type + size server-side
+- Do not drop or alter the shared schema tables
 
-Placing an order empties the cart, and deleting a customer is permanent. To get
-everything back, import **`sql/reset_demo.sql`** in phpMyAdmin. It empties the
-eight tables and reloads the original products, accounts, reviews, cart items and
-sample order. Safe to run as often as you like, and it never changes the table
-structure.
+## Mandatory Grading Criteria
 
----
+Each student must satisfy all 10 within their task:
 
-## Folder layout
+1. **Basic Web Security** – SQL injection prevention, XSS protection, CSRF awareness, secure password storage.
+2. **UI (HTML/CSS)** – Clean, responsive, user-friendly interface.
+3. **Feature Completeness** – All assigned requirements work error-free.
+4. **DB** – Correct use of shared schema, proper relationships, data integrity.
+5. **Auth (Session/Cookie)** – Session management, role-based access, "Remember Me" (optional).
+6. **MVC** – Clear separation of business logic, presentation, and request handling.
+7. **JS Validation** – Client-side validation on forms (e.g., registration, product search, review, cart).
+8. **PHP Validation** – Server-side validation on every input before DB write.
+9. **Ajax/JSON** – At least one AJAX endpoint returning JSON per student.
+10. **Git Contribution** – Feature branches, meaningful commits (≥3 per student), merge into main via PR.
 
-```
-LabTask02/
-├── control/                 request handling and server-side validation
-├── model/  config.php     settings and shared helper functions
-│        db.php         one mydb class holding every query, the same way
-│                       the lab sample does. All prepared statements.
-├── view/                    pages, with view/partials/ for header and footer
-├── css/style.css
-├── js/                      client-side validation
-├── sql/                     shared schema + demo data
-└── images/, uploads/
-```
+## Git Flow
 
-The structure follows the lab sample: `control/`, `model/`, `view/` and nothing
-else. Each database function is a plain function inside `class mydb` that takes
-`$conn` as its first parameter, and the control files call it like the sample's
-login control does:
+- Repository has a `main` branch (protected, no direct pushes).
+- Each student creates a feature branch from `main` named `feature/taskX-studentID` (e.g., `feature/task1-2249686-3`).
+- Work on the feature branch, commit regularly (at least 3 commits per student).
+- After completing the feature, open a pull request into `main` and merge.
+- Final `main` must contain all four feature branches merged with full history.
 
-```php
-$db     = new mydb();
-$conn   = $db->openConn();
-$result = $db->getReviewsByProduct($conn, $productId);
+## Task Breakdown
 
-while ($row = $result->fetch_assoc()) {
-    $reviews[] = $row;
-}
-```
+### Task 1 – User Authentication, Registration, Profile, Home Page, Category Bar & Featured Components
 
-### SQL style
+**Student:** 23-54430-3
+**CRUD included:** Create (registration), Read/Update (profile)
 
-The queries follow Week 06 (PHP and MySQL): build the string in `$qry`, run it
-with `$conn->query($qry)`, check with `if($res)`.
+**Requirements:**
 
-```php
-$qry = "SELECT COUNT(*) AS total FROM reviews";
-$res = $conn->query($qry);
-```
+- **Registration** – form for both admin and customers. Collect: name, email, password (≥8 chars), role (admin/customer). Validate unique email, hash password. Redirect to login with flash message.
+- **Login & Remember Me** – login creates `$_SESSION['user_id']`, `$_SESSION['name']`, `$_SESSION['role']`. "Remember Me" checkbox stores secure random token (hashed) in `users.remember_token` and writes a 30-day cookie. On subsequent visits PHP reinstates session automatically.
+- **Profile Page** (session-gated) – user can update name, email, profile picture (upload to `public/uploads/`), and change password (require current password). Show success banner on save.
+- **Logout & Navbar** – logout destroys session and deletes remember cookie. Navbar shows different links based on role (admin/customer/guest).
+- **Home Page** – for all visitors:
+  - Category bar (top navigation – list all top-level categories from DB). Clicking a category navigates to that category page.
+  - Featured components section – fetch 4–6 random or latest products, display name, small manufacturer review, and price.
+- JS validation on registration and profile forms (e.g., password match, email format).
 
-Where a value comes from the user, the query uses a `?` placeholder and
-`bind_param()` instead of pasting the value into the string:
+**Key outputs:** `users` table populated with admin and customer accounts; session + "Remember Me" functional; home page displays dynamic categories and featured products.
 
-```php
-$qry  = "SELECT * FROM reviews WHERE product_id = ?";
-$stmt = $conn->prepare($qry);
-$stmt->bind_param("i", $product_id);
-$stmt->execute();
-$res  = $stmt->get_result();
-```
+### Task 2 – Admin: Category & Sub-category Management, Brand Management, Product Management (full CRUD)
 
-This is what Week 06 theory slide 6 asks for: *"Prepared Statements protect from
-SQL injection, and are very important for web application security."* It is also
-grading criterion 1. Of the 32 queries, 9 have no user input and run the plain
-way; the other 23 use placeholders.
+**Student:** 23-53850-3
+**CRUD included:** Full CRUD on categories (including sub-categories), brands, and products.
 
-`mysqli_report(MYSQLI_REPORT_OFF)` is set once at the top of `model/db.php`. PHP 8
-otherwise makes mysqli throw an error object instead of returning false, which
-would stop the `if($res)` checks taught in class from ever running.
+**Requirements:**
 
----
+- **Admin Gate** – every admin page checks `$_SESSION['role'] === 'admin'`; redirect others.
+- **Category Management** – create, edit, delete categories. Support sub-categories (`parent_id` field). Example: Storage → Permanent storage (HDD, SSD) and Portable storage. Deleting a category blocks if it has child categories or products (show descriptive error).
+- **Brand Management** – create, edit, delete brands under a specific category. Example: Monitor category → brands ASUS, LG, DELL. Deleting a brand blocks if products exist under that brand.
+- **Product Management** – create, edit, delete products. Form includes: name, description, manufacturer review (text), price (>0), category dropdown, brand dropdown (populated based on selected category), image upload (JPEG/PNG ≤2MB to `public/uploads/products/`), stock quantity. Edit pre-fills form. Delete removes image file.
+- **Dashboard summary** – total products, total categories, total brands, low-stock alerts (e.g., stock <5).
+- PHP & JS validation on all forms (e.g., price positive, image type/size).
+- **AJAX** – optional for dynamic brand loading when category changes, or inline product status toggle (e.g., active/inactive).
 
-## MVC
+**Key outputs:** Fully populated `categories`, `brands`, `products` tables; admin can manage entire inventory.
 
-| Layer | Folder | What lives there |
-|-------|--------|------------------|
-| **Model** | `model/` | `db.php` &mdash; every query, one function each. `config.php` &mdash; settings and shared helpers. Nothing here prints anything. |
-| **View** | `view/` | The pages, plus `view/partials/` for the header and footer. They display what the controller prepared and do not query the database. |
-| **Controller** | `control/` | Request handling, validation and business rules. Each view includes its controller on the first line, the way the lab sample does. |
+### Task 3 – Customer: Browse by Category/Sub-category/Brand, Search & Filtering (AJAX), Product Details, Cart
 
-`control/bootstrap.php` is included by every controller: it starts the session,
-opens one connection and works out who is signed in.
+**Student:** 24-56465-1
+**CRUD included:** Create, Update, Delete on cart (session or DB based cart). Read for product browsing.
 
-## AJAX and JSON
+**Requirements:**
 
-Two endpoints answer with JSON instead of a page. Both set
-`Content-Type: application/json` and finish with `json_encode()`.
+- **Customer Gate** – cart and order actions require login; browsing is public.
+- **Browse by Category/Sub-category/Brand** – when user clicks a category (e.g., RAM), show all products from that category and all its sub-categories and all brands under them. Similarly, clicking a sub-category or brand shows only relevant products. Use clean URLs like `/category/ram`, `/brand/dell`.
+- **Component Pages** – each page shows product name, small manufacturer review, price. Pagination optional.
+- **Search Box & Filtering (AJAX)** – search box on every page. On submit or keystroke, call `GET /api/products/search?q=...`. Filtering options: price range (min/max), category, brand. AJAX returns JSON, JS dynamically updates product grid without page reload.
+- **Product Detail Page** – displays full description, manufacturer review, price, stock status, image. "Add to Cart" button.
+- **Cart Management (AJAX):**
+  - Add to cart (`AJAX POST /api/cart/add`) – updates session or DB cart, returns new cart item count.
+  - Cart page – list items (product name, quantity, unit price, subtotal).
+  - Update quantity (+/−) and remove item via AJAX calls (`/api/cart/update`, `/api/cart/remove`). Returns updated totals.
+  - Show total price in cart.
+- JS validation on search filters (price range as numbers) and cart quantity (positive integer).
+- PHP validation – ensure product exists, quantity not exceeding stock.
 
-| Endpoint | Actions | Browser side |
-|----------|---------|--------------|
-| `control/api_reviews.php` | `list`, `add`, `delete` | `js/review_ajax.js` &mdash; **jQuery** (`$.post`, `$(document).ready`, selectors) |
-| `control/api_cart.php` | `update`, `remove` | `js/cart_ajax.js` &mdash; **XMLHttpRequest** with `readyState == 4 && status == 200`, as the AJAX lecture and the lab sample write it |
+**Key outputs:** Customers can browse by category/sub-category/brand, search/filter products, view details, and manage cart entirely with AJAX.
 
-Both styles are used on purpose, so the project shows the plain browser object as
-taught in class as well as the jQuery version.
+### Task 4 – Customer Reviews, Order Placement with Payment Method, Admin Removal of Customers & Reviews
 
-**Both pages still work with JavaScript switched off.** PHP draws the review list
-and the cart on the first load, and the forms post normally to
-`control/product_control.php` and `control/cart_control.php` if the AJAX never
-runs. The endpoints repeat every check anyway &mdash; JavaScript can be edited by
-the person using the page, so it never decides what is allowed.
+**Student:** 23-51842-2
+**CRUD included:** Create/Delete (reviews by customer), Create (order), Delete (users and reviews by admin).
 
-jQuery is kept in `js/jquery.min.js` rather than loaded from a CDN, so the site
-works without an internet connection.
+**Requirements:**
 
----
+- **Review Section** – under every product detail page.
+  - Display existing reviews (reviewer name, comment, date).
+  - Only logged-in customers can post a review. Form pre-fills name from profile, comment field.
+  - Submit review (`AJAX POST /api/reviews/add`) – saves to `reviews` with `user_id`.
+  - Customer can delete their own review (`AJAX DELETE /api/reviews/{id}`).
+- **Order Placement** – from cart page, customer selects payment method (cash on delivery / online wallet). Checkout process:
+  - Validate cart not empty.
+  - Create `orders` row (user_id, total_amount, payment_method, status='pending', order_date).
+  - Create `order_items` rows for each cart item.
+  - Clear cart.
+  - Redirect to order confirmation page showing order ID and summary.
+- **Admin – Remove Customers** – admin page listing all customers (role='customer'). Each row has "Delete" button. Delete cascades: remove customer's reviews, cart items, orders (or set `user_id` to NULL with caution). Use AJAX or POST confirm.
+- **Admin – Remove Reviews** – admin page listing all reviews (with product name, reviewer name). Delete button removes any review (AJAX).
+- **Admin Dashboard** – additional section showing recent orders and recent reviews.
+- JS validation on review form (non-empty comment, max length).
+- PHP validation – ensure only logged-in customers can post reviews; admin can delete any user/review.
 
-## Progress
-
-| # | Feature | Status |
-|---|---------|--------|
-| 1 | Review section: list, post, delete own | Done |
-| 2 | Order placement with payment method | Done |
-| 3 | Admin: remove customers | Done |
-| 4 | Admin: remove any review | Done |
-| 5 | Admin dashboard: recent orders and reviews | Done |
-
-The cart is fully working on its own (add, change quantity, remove, checkout), so
-the whole flow can be demonstrated without waiting for Task 3. When Task 3 is
-merged, their cart page and product browsing replace these.
-
-### The admin side
-
-Signing in as **Mahmud Hasan (admin@shop.com)** on the sign in page switches the
-navbar to Dashboard, Customers and Reviews.
-
-| Page | What it does |
-|------|--------------|
-| `view/admin_dashboard.php` | Four counts, the latest orders and the latest reviews |
-| `view/admin_customers.php` | Every customer, with a Delete button |
-| `view/admin_reviews.php` | Every review, with a Delete button |
-
-Every admin page begins with the same gate: if `$isAdmin` is false it prints a
-message and stops, so a customer who types the address in gets nowhere.
-
-Deleting a customer is the interesting one. `orders.user_id` has no
-`ON DELETE CASCADE`, so a plain `DELETE FROM users` fails with
-`ERROR 1451` for anyone who has ordered. `mydb::deleteCustomer()` therefore
-deletes the orders first and then the account, both inside one transaction.
-Reviews, cart rows and order items are removed by the cascades already in the
-schema.
-
-An admin may also open any customer's order confirmation; a customer may open
-only their own.
-
-### Still to come
-
-- **Task 1's real login** &mdash; a registration form and password check replace
-  `view/login.php`. It only has to set the same three session keys.
-- **Task 3's cart and product browsing** &mdash; replaces the product listing and the
-  cart table. The payment box and the review section lift out as whole blocks.
-- **Git** &mdash; feature branch, at least three commits, pull request into `main`.
-
----
-
-## Security
-
-| Risk | What the project does |
-|------|----------------------|
-| SQL injection | Every query taking a user value uses `?` and `bind_param`. 34 queries, only the two `LIMIT` ones interpolate, and both cast to `(int)` first. |
-| XSS | Everything PHP prints goes through `e()` (`htmlspecialchars`); jQuery builds review text with `.text()`, never `.html()`. |
-| CSRF | A token is created once per session, printed into all nine POST forms with `csrf_field()`, and sent with every AJAX call from a `<meta name="csrf-token">` tag. Each controller and both endpoints reject a POST whose token does not match, using `hash_equals`. |
-| Faking a request | Every rule checked in JavaScript is checked again in PHP. |
-| Acting as someone else | Ownership is checked in PHP and repeated in the SQL `WHERE`, e.g. `DELETE FROM reviews WHERE id = ? AND user_id = ?`. |
-
-**Passwords are Task 1's.** The seed data stores real bcrypt hashes made with
-`password_hash()`, but the sign-in page here does not ask for a password &mdash;
-registration and login are Task 1's requirement, and `password_verify()` belongs
-in their login controller. This project only reads the session that a login
-creates.
-
----
-
-## Notes on the shared schema
-
-- `reviews` has no `reviewer_name` column, so the reviewer's name is read from
-  `users` with a JOIN. One source of truth for the name.
-- `orders.payment_method` is `enum('cash','card','bkash')` — not the
-  `cash_on_delivery` / `online_wallet` wording used in the project brief.
-- `carts.added_at` is an `INT`, so it stores a UNIX timestamp, not a datetime.
-- `orders.total_amount` is `decimal(10,0)`, so order totals are stored without
-  paisa. `order_items.unit_price` keeps two decimal places.
-- `orders` has no `ON DELETE CASCADE` on `user_id`. Deleting a customer must
-  delete their orders first, otherwise MySQL blocks the delete.
-
-## Decisions worth knowing
-
-- **Payment method labels.** The brief says "cash on delivery / online wallet",
-  the column says `enum('cash','card','bkash')`. The column wins; the three
-  options are shown as *Cash on Delivery*, *Credit / Debit Card* and
-  *bKash (online wallet)*.
-- **Checkout runs in one transaction.** The order row, every order item and the
-  emptying of the cart either all succeed or all roll back, so the database can
-  never hold an order with no items or a cart cleared without an order.
-- **Stock is not reduced when an order is placed.** Checkout refuses a quantity
-  larger than the current stock, but changing `products.stock` belongs to
-  Task 2, so this task does not write to it.
-- **Deleting a customer deletes their orders first.** A plain
-  `DELETE FROM users WHERE id = ?` fails with
-  `ERROR 1451 ... orders_ibfk_1` whenever the customer has ordered anything,
-  because `orders.user_id` has no `ON DELETE CASCADE`. The delete therefore
-  runs as orders first, then the account, inside one transaction. Reviews,
-  cart rows and order items are removed by the cascades already in the schema.
-- **Admins cannot be deleted** from the customer page: the listing filters on
-  `role = 'customer'`, the model refuses any non-customer, and `role` is
-  repeated in the `DELETE` WHERE clause as a third guard.
->>>>>>> b0e2fc7 (Upload Project)
+**Key outputs:** Full review system (post/delete own), order placement with payment method selection, admin ability to remove any customer or review. All CRUD covered.
