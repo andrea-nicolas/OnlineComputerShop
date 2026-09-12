@@ -24,7 +24,7 @@ $(document).ready(function () {
         }
 
         $.post(
-            "../control/api_reviews.php",
+            "../controllers/api_reviews.php",
             {
                 action: "admin_delete",
                 review_id: form.find("input[name='review_id']").val(),

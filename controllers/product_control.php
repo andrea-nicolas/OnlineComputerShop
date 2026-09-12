@@ -50,7 +50,7 @@ if ($product != null) {
         } elseif ((int) $product["stock"] < 1) {
             $formError = "This product is out of stock.";
         } elseif ($db->addToCart($conn, $userId, $productId, 1)) {
-            redirect(link_to("/view/product_details.php?id=" . $productId . "&msg=cart"));
+            redirect(link_to("/views/product_details.php?id=" . $productId . "&msg=cart"));
         } else {
             $formError = "The product could not be added to the cart.";
         }
@@ -80,7 +80,7 @@ if ($product != null) {
             $newId = $db->addReview($conn, $productId, $userId, $commentValue);
 
             if ($newId > 0) {
-                redirect(link_to("/view/product_details.php?id=" . $productId . "&msg=added") . "#reviews");
+                redirect(link_to("/views/product_details.php?id=" . $productId . "&msg=added") . "#reviews");
             } else {
                 $formError = "The review could not be saved. Please try again.";
             }
@@ -109,7 +109,7 @@ if ($product != null) {
                 if ((int) $review["user_id"] != $userId) {
                     $formError = "You can only delete your own review.";
                 } elseif ($db->deleteOwnReview($conn, $reviewId, $userId)) {
-                    redirect(link_to("/view/product_details.php?id=" . $productId . "&msg=deleted") . "#reviews");
+                    redirect(link_to("/views/product_details.php?id=" . $productId . "&msg=deleted") . "#reviews");
                 } else {
                     $formError = "The review could not be deleted. Please try again.";
                 }

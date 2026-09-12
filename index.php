@@ -1,4 +1,4 @@
 <?php
 
-require_once __DIR__ . "/model/config.php";
-redirect(BASE_URL . "/view/products.php");
+require_once __DIR__ . "/models/config.php";
+redirect(BASE_URL . "/views/products.php");

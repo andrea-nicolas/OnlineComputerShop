@@ -57,7 +57,7 @@ if (!$isAdminPage) {
 
                     if ($db->deleteCustomer($conn, $customerId)) {
 
-                        redirect(link_to("/view/admin_customers.php?msg=deleted"
+                        redirect(link_to("/views/admin_customers.php?msg=deleted"
                             . "&r=" . (int) $counts["reviews"]
                             . "&o=" . (int) $counts["orders"]
                             . "&c=" . (int) $counts["cart_items"]));

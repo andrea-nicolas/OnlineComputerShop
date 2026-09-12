@@ -7,7 +7,7 @@ $formError = "";
 
 if (!$isLoggedIn) {
 
-    redirect(link_to("/view/login.php?msg=required"));
+    redirect(link_to("/views/login.php?msg=required"));
 
 } elseif (!$isCustomer) {
 

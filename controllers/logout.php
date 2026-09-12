@@ -7,4 +7,4 @@ session_destroy();
 
 setcookie(REMEMBER_COOKIE, "", time() - 3600, "/");
 
-redirect(link_to("/view/login.php?msg=out"));
+redirect(link_to("/views/login.php?msg=out"));

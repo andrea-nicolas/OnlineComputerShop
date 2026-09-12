@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../control/cart_control.php";
+require_once __DIR__ . "/../controllers/cart_control.php";
 $pageTitle = "Cart";
 include __DIR__ . "/partials/header.php";
 ?>
@@ -21,7 +21,7 @@ include __DIR__ . "/partials/header.php";
         <?php } ?>
     </div>
 
-    <a class="btn btn-light" href="<?php echo link_to('/view/products.php'); ?>">Browse products</a>
+    <a class="btn btn-light" href="<?php echo link_to('/views/products.php'); ?>">Browse products</a>
 
 <?php } else { ?>
 
@@ -39,7 +39,7 @@ include __DIR__ . "/partials/header.php";
 
         <div class="empty">
             <p>Your cart is empty.</p>
-            <a class="btn" href="<?php echo link_to('/view/products.php'); ?>">Browse products</a>
+            <a class="btn" href="<?php echo link_to('/views/products.php'); ?>">Browse products</a>
         </div>
 
     <?php } else { ?>
@@ -60,7 +60,7 @@ include __DIR__ . "/partials/header.php";
                     <?php foreach ($cartItems as $item) { ?>
                         <tr id="cart-row-<?php echo (int) $item["cart_id"]; ?>">
                             <td>
-                                <a href="<?php echo link_to('/view/product_details.php?id=' . (int) $item["product_id"]); ?>">
+                                <a href="<?php echo link_to('/views/product_details.php?id=' . (int) $item["product_id"]); ?>">
                                     <?php echo e($item["name"]); ?>
                                 </a>
                                 <div class="small muted"><?php echo e($item["brand_name"]); ?></div>
@@ -149,7 +149,7 @@ include __DIR__ . "/partials/header.php";
 
                 <p style="margin-top:16px;">
                     <button type="submit" name="place_order" class="btn">Place order</button>
-                    <a class="btn btn-light" href="<?php echo link_to('/view/products.php'); ?>">Keep shopping</a>
+                    <a class="btn btn-light" href="<?php echo link_to('/views/products.php'); ?>">Keep shopping</a>
                 </p>
             </form>
         </div>

@@ -18,7 +18,7 @@ function cartRequest(body, whenDone) {
         }
     };
 
-    xhttp.open("POST", "../control/api_cart.php", true);
+    xhttp.open("POST", "../controllers/api_cart.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(body);
 }

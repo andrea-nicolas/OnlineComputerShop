@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../control/login_control.php";
+require_once __DIR__ . "/../controllers/login_control.php";
 $pageTitle = "Sign in";
 include __DIR__ . "/partials/header.php";
 ?>

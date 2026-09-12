@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../control/admin_reviews_control.php";
+require_once __DIR__ . "/../controllers/admin_reviews_control.php";
 $pageTitle = "Manage Reviews";
 include __DIR__ . "/partials/header.php";
 ?>
@@ -14,7 +14,7 @@ include __DIR__ . "/partials/header.php";
 <?php if (!$isAdminPage) { ?>
 
     <div class="alert alert-error"><?php echo e($formError); ?></div>
-    <a class="btn btn-light" href="<?php echo link_to('/view/products.php'); ?>">Back to products</a>
+    <a class="btn btn-light" href="<?php echo link_to('/views/products.php'); ?>">Back to products</a>
 
 <?php } else { ?>
 
@@ -52,7 +52,7 @@ include __DIR__ . "/partials/header.php";
                         <tr>
                             <td><?php echo (int) $r["id"]; ?></td>
                             <td>
-                                <a href="<?php echo link_to('/view/product_details.php?id=' . (int) $r["product_id"]); ?>">
+                                <a href="<?php echo link_to('/views/product_details.php?id=' . (int) $r["product_id"]); ?>">
                                     <?php echo e($r["product_name"]); ?>
                                 </a>
                             </td>

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../control/my_orders_control.php";
+require_once __DIR__ . "/../controllers/my_orders_control.php";
 $pageTitle = "My Orders";
 include __DIR__ . "/partials/header.php";
 ?>
@@ -14,13 +14,13 @@ include __DIR__ . "/partials/header.php";
 <?php if ($formError !== "") { ?>
 
     <div class="alert alert-warn"><?php echo e($formError); ?></div>
-    <a class="btn btn-light" href="<?php echo link_to('/view/products.php'); ?>">Browse products</a>
+    <a class="btn btn-light" href="<?php echo link_to('/views/products.php'); ?>">Browse products</a>
 
 <?php } elseif (count($orders) === 0) { ?>
 
     <div class="empty">
         <p>You have not placed any order yet.</p>
-        <a class="btn" href="<?php echo link_to('/view/products.php'); ?>">Browse products</a>
+        <a class="btn" href="<?php echo link_to('/views/products.php'); ?>">Browse products</a>
     </div>
 
 <?php } else { ?>
@@ -48,7 +48,7 @@ include __DIR__ . "/partials/header.php";
                         <td class="num"><?php echo money($o["total_amount"]); ?></td>
                         <td class="num">
                             <a class="btn btn-light btn-small"
-                               href="<?php echo link_to('/view/order_confirmation.php?id=' . (int) $o["id"]); ?>">View</a>
+                               href="<?php echo link_to('/views/order_confirmation.php?id=' . (int) $o["id"]); ?>">View</a>
                         </td>
                     </tr>
                 <?php } ?>

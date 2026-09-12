@@ -2,10 +2,10 @@
 
 session_start();
 
-require_once __DIR__ . "/../model/config.php";
-require_once __DIR__ . "/../model/db.php";
+require_once __DIR__ . "/../models/config.php";
+require_once __DIR__ . "/../models/db.php";
 
-$db   = new mydb();
+$db   = new Task4Db();
 $conn = $db->openConn();
 
 $currentUser = null;

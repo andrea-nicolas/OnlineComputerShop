@@ -94,7 +94,7 @@ $(document).ready(function () {
         }
 
         $.post(
-            "../control/api_reviews.php",
+            "../controllers/api_reviews.php",
             { action: "add", product_id: productId, comment: comment, csrf_token: csrfToken() },
             function (data) {
                 if (data.ok) {
@@ -118,7 +118,7 @@ $(document).ready(function () {
         }
 
         $.post(
-            "../control/api_reviews.php",
+            "../controllers/api_reviews.php",
             { action: "delete", product_id: productId, review_id: $(this).attr("data-id"), csrf_token: csrfToken() },
             function (data) {
                 showMessage(data.message, !data.ok);

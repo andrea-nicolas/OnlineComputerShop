@@ -41,7 +41,7 @@ if (!$isAdminPage) {
             if ($result->num_rows < 1) {
                 $formError = "That review does not exist any more.";
             } elseif ($db->deleteReview($conn, $reviewId)) {
-                redirect(link_to("/view/admin_reviews.php?msg=deleted"));
+                redirect(link_to("/views/admin_reviews.php?msg=deleted"));
             } else {
                 $formError = "The review could not be deleted. Please try again.";
             }

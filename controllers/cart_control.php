@@ -25,7 +25,7 @@ if (isset($_GET["msg"])) {
 }
 
 if (!$isLoggedIn) {
-    redirect(link_to("/view/login.php?msg=required"));
+    redirect(link_to("/views/login.php?msg=required"));
 }
 
 $canCheckout = $isCustomer;
@@ -64,7 +64,7 @@ if ($canCheckout) {
             } elseif ($quantity > (int) $line["stock"]) {
                 $formError = "Only " . (int) $line["stock"] . " of " . $line["name"] . " are in stock.";
             } elseif ($db->updateCartQuantity($conn, $cartId, $userId, $quantity)) {
-                redirect(link_to("/view/cart.php?msg=updated"));
+                redirect(link_to("/views/cart.php?msg=updated"));
             } else {
                 $formError = "The quantity could not be changed.";
             }
@@ -81,7 +81,7 @@ if ($canCheckout) {
         if ($cartId <= 0) {
             $formError = "That cart item does not exist.";
         } elseif ($db->removeCartItem($conn, $cartId, $userId)) {
-            redirect(link_to("/view/cart.php?msg=removed"));
+            redirect(link_to("/views/cart.php?msg=removed"));
         } else {
             $formError = "That item is not in your cart.";
         }
@@ -141,7 +141,7 @@ if ($canCheckout) {
             $orderId = $db->placeOrder($conn, $userId, $cartItems, $total, $paymentMethod);
 
             if ($orderId > 0) {
-                redirect(link_to("/view/order_confirmation.php?id=" . $orderId . "&msg=placed"));
+                redirect(link_to("/views/order_confirmation.php?id=" . $orderId . "&msg=placed"));
             } else {
                 $formError = "The order could not be placed. Nothing was saved. Please try again.";
             }

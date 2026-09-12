@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../control/order_confirmation_control.php";
+require_once __DIR__ . "/../controllers/order_confirmation_control.php";
 $pageTitle = ($order !== null) ? ("Order #" . (int) $order["id"]) : "Order";
 include __DIR__ . "/partials/header.php";
 ?>
@@ -9,7 +9,7 @@ include __DIR__ . "/partials/header.php";
     <div class="card">
         <h1>Order not available</h1>
         <p class="muted"><?php echo e($accessError); ?></p>
-        <a class="btn" href="<?php echo link_to('/view/products.php'); ?>">Back to products</a>
+        <a class="btn" href="<?php echo link_to('/views/products.php'); ?>">Back to products</a>
     </div>
 
 <?php } else { ?>
@@ -58,7 +58,7 @@ include __DIR__ . "/partials/header.php";
                 <?php foreach ($orderItems as $item) { ?>
                     <tr>
                         <td>
-                            <a href="<?php echo link_to('/view/product_details.php?id=' . (int) $item["product_id"]); ?>">
+                            <a href="<?php echo link_to('/views/product_details.php?id=' . (int) $item["product_id"]); ?>">
                                 <?php echo e($item["product_name"]); ?>
                             </a>
                         </td>
@@ -77,9 +77,9 @@ include __DIR__ . "/partials/header.php";
     </div>
 
     <p>
-        <a class="btn btn-light" href="<?php echo link_to('/view/products.php'); ?>">Keep shopping</a>
+        <a class="btn btn-light" href="<?php echo link_to('/views/products.php'); ?>">Keep shopping</a>
         <?php if ($isCustomer) { ?>
-            <a class="btn btn-light" href="<?php echo link_to('/view/my_orders.php'); ?>">My orders</a>
+            <a class="btn btn-light" href="<?php echo link_to('/views/my_orders.php'); ?>">My orders</a>
         <?php } ?>
     </p>
 

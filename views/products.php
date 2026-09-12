@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../control/products_control.php";
+require_once __DIR__ . "/../controllers/products_control.php";
 $pageTitle = "Products";
 include __DIR__ . "/partials/header.php";
 ?>
@@ -27,7 +27,7 @@ include __DIR__ . "/partials/header.php";
                      alt="<?php echo e($p["name"]); ?>">
 
                 <span class="small muted"><?php echo e($p["category_name"]); ?> &middot; <?php echo e($p["brand_name"]); ?></span>
-                <a class="name" href="<?php echo link_to('/view/product_details.php?id=' . (int) $p["id"]); ?>">
+                <a class="name" href="<?php echo link_to('/views/product_details.php?id=' . (int) $p["id"]); ?>">
                     <?php echo e($p["name"]); ?>
                 </a>
                 <p class="small muted" style="margin:0;"><?php echo e($p["manufacturer_review"]); ?></p>

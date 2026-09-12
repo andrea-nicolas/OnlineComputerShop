@@ -4,7 +4,7 @@ require_once __DIR__ . "/config.php";
 
 mysqli_report(MYSQLI_REPORT_OFF);
 
-class mydb{
+class Task4Db{
 
 function openConn()
 {

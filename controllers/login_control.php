@@ -13,7 +13,7 @@ $accounts  = array();
 $formError = "";
 
 if ($isLoggedIn) {
-    redirect(link_to("/view/products.php"));
+    redirect(link_to("/views/products.php"));
 }
 
 if (isset($_POST["sign_in"])) {
@@ -46,7 +46,7 @@ if (isset($_POST["sign_in"])) {
                 );
             }
 
-            redirect(link_to("/view/products.php"));
+            redirect(link_to("/views/products.php"));
         }
     }
 }

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../control/product_control.php";
+require_once __DIR__ . "/../controllers/product_control.php";
 $pageTitle = ($product !== null) ? $product["name"] : "Product not found";
 include __DIR__ . "/partials/header.php";
 ?>
@@ -9,13 +9,13 @@ include __DIR__ . "/partials/header.php";
     <div class="card">
         <h1>Product not found</h1>
         <p class="muted">That product does not exist, or the link is missing an id.</p>
-        <a class="btn" href="<?php echo link_to('/view/products.php'); ?>">Back to products</a>
+        <a class="btn" href="<?php echo link_to('/views/products.php'); ?>">Back to products</a>
     </div>
 
 <?php } else { ?>
 
     <p class="small">
-        <a href="<?php echo link_to('/view/products.php'); ?>">&larr; All products</a>
+        <a href="<?php echo link_to('/views/products.php'); ?>">&larr; All products</a>
     </p>
 
     <div class="card">
@@ -61,7 +61,7 @@ include __DIR__ . "/partials/header.php";
                 <?php if ($cartMsg !== "") { ?>
                     <div class="alert alert-success" style="margin-top:14px;">
                         <?php echo e($cartMsg); ?>
-                        <a href="<?php echo link_to('/view/cart.php'); ?>">Go to cart &rarr;</a>
+                        <a href="<?php echo link_to('/views/cart.php'); ?>">Go to cart &rarr;</a>
                     </div>
                 <?php } ?>
 

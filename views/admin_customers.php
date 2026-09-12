@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../control/admin_customers_control.php";
+require_once __DIR__ . "/../controllers/admin_customers_control.php";
 $pageTitle = "Manage Customers";
 include __DIR__ . "/partials/header.php";
 ?>
@@ -14,7 +14,7 @@ include __DIR__ . "/partials/header.php";
 <?php if (!$isAdminPage) { ?>
 
     <div class="alert alert-error"><?php echo e($formError); ?></div>
-    <a class="btn btn-light" href="<?php echo link_to('/view/products.php'); ?>">Back to products</a>
+    <a class="btn btn-light" href="<?php echo link_to('/views/products.php'); ?>">Back to products</a>
 
 <?php } else { ?>
 
