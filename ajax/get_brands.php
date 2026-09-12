@@ -6,7 +6,7 @@
 // product form changes, so the brand list updates without reloading the page.
 //
 // Request : GET ../ajax/get_brands.php?category_id=2
-// Response: {"success":true,"message":"","brands":[{"id":"1","name":"SanDisk"}]}
+// Response: {"success":true,"message":"","brands":[{"id":1,"name":"SanDisk"}]}
 
 include_once "../control/authcheck_json.php";
 include_once "../model/db.php";
