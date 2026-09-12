@@ -1,5 +1,5 @@
 -- ---------------------------------------------------------------
--- Task 2 (23-50934-1) - product status
+-- Task 2 (23-53850-3) - product status
 --
 -- The shared dump has no status column on `products`, and the project
 -- rules say the shared tables must not be dropped or altered. So the
