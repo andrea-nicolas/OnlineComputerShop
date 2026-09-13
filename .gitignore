@@ -1,3 +1,7 @@
+# Uploaded product images belong to whoever is running the panel,
+# not to the repository. The folder itself is kept by .gitkeep.
+uploads/products/*
+!uploads/products/.gitkeep
 # Local diagnostics - helpers for setting up the demo, not part of the project
 /check.php
 /setup.php
