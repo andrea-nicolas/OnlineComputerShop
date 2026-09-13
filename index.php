@@ -45,3 +45,5 @@ if ($page == 'home') {
     echo '<a href="index.php">Go to Home</a>';
 }
 ?>
+require_once __DIR__ . "/models/config.php";
+redirect(BASE_URL . "/views/products.php");
