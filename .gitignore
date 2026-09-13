@@ -2,3 +2,20 @@
 # not to the repository. The folder itself is kept by .gitkeep.
 uploads/products/*
 !uploads/products/.gitkeep
+# Local diagnostics - helpers for setting up the demo, not part of the project
+/check.php
+/setup.php
+
+# Files uploaded while the site is running (profile pictures, product images).
+# The folder is kept, its contents are not.
+/uploads/*
+!/uploads/.gitkeep
+
+# Editor and OS noise
+.vscode/
+.idea/
+*.code-workspace
+Thumbs.db
+desktop.ini
+.DS_Store
+*.log
